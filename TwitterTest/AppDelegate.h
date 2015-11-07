@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TwitterToken.h"
+
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
-
+@property (strong, nonatomic) UIWindow                      *window;
+@property (nonatomic, weak) id<TwitterTokenProtocol>        twitterTokenDelegate;
 
 @end
 

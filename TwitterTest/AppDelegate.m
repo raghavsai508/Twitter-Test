@@ -7,16 +7,20 @@
 //
 
 #import "AppDelegate.h"
+#import "ServiceManager.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) ServiceManager *serviceManager;
 
 @end
 
 @implementation AppDelegate
 
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+    [self makeServiceCallBearerToken];
     return YES;
 }
 
@@ -41,5 +45,24 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+#pragma mark - Service call
+- (void)makeServiceCallBearerToken
+{
+    self.serviceManager = [ServiceManager defaultServiceManager];
+    __weak typeof(self) weakSelf = self;
+    [self.serviceManager bearerTokenID:^(NSDictionary *dataDictionary, NSError *error) {
+            if(!error)
+            {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf.twitterTokenDelegate twitterTokenDownloaded:dataDictionary];
+                NSLog(@"%@",dataDictionary);
+            }
+            else
+                NSLog(@"%@",error);
+
+    }];
+}
+
 
 @end
