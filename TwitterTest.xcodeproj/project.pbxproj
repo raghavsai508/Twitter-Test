@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		67B934121BEE53F900AD068B /* UserTimelineCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B934111BEE53F900AD068B /* UserTimelineCell.m */; };
+		67B934151BEE6E8600AD068B /* MediaInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B934141BEE6E8600AD068B /* MediaInfo.m */; };
+		67B934181BEE70E400AD068B /* MessageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B934171BEE70E400AD068B /* MessageInfo.m */; };
+		67B9341C1BEE721A00AD068B /* UserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B9341B1BEE721A00AD068B /* UserInfo.m */; };
+		67B934211BEEB58600AD068B /* UserTimelineImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B934201BEEB58600AD068B /* UserTimelineImageCell.m */; };
+		67B934241BEEBDB700AD068B /* ImagesContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 67B934231BEEBDB700AD068B /* ImagesContainer.m */; };
 		67EDE9831BED002600C1AF25 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9821BED002600C1AF25 /* main.m */; };
 		67EDE9861BED002600C1AF25 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9851BED002600C1AF25 /* AppDelegate.m */; };
-		67EDE9891BED002600C1AF25 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9881BED002600C1AF25 /* ViewController.m */; };
+		67EDE9891BED002600C1AF25 /* UserTimelineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9881BED002600C1AF25 /* UserTimelineViewController.m */; };
 		67EDE98C1BED002600C1AF25 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67EDE98A1BED002600C1AF25 /* Main.storyboard */; };
 		67EDE98E1BED002600C1AF25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67EDE98D1BED002600C1AF25 /* Assets.xcassets */; };
 		67EDE9911BED002600C1AF25 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67EDE98F1BED002600C1AF25 /* LaunchScreen.storyboard */; };
@@ -20,6 +26,7 @@
 		67EDE9C51BED5E9D00C1AF25 /* TwitterKeys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 67EDE9C41BED5E9D00C1AF25 /* TwitterKeys.plist */; };
 		67EDE9C91BED6DA800C1AF25 /* TwitterToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9C81BED6DA800C1AF25 /* TwitterToken.m */; };
 		67EDE9CD1BED9F0800C1AF25 /* UserTimeLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9CC1BED9F0800C1AF25 /* UserTimeLineModel.m */; };
+		67EDE9D11BEDABA000C1AF25 /* UserTimelineParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 67EDE9D01BEDABA000C1AF25 /* UserTimelineParser.m */; };
 		BCD47D92FDDD85FB0CDEE2EC /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99592B8120A0AFBF3F8390C1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -34,12 +41,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		67B934101BEE53F900AD068B /* UserTimelineCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTimelineCell.h; sourceTree = "<group>"; };
+		67B934111BEE53F900AD068B /* UserTimelineCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTimelineCell.m; sourceTree = "<group>"; };
+		67B934131BEE6E8600AD068B /* MediaInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MediaInfo.h; path = TwitterTest/Models/MediaInfo.h; sourceTree = SOURCE_ROOT; };
+		67B934141BEE6E8600AD068B /* MediaInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MediaInfo.m; path = TwitterTest/Models/MediaInfo.m; sourceTree = SOURCE_ROOT; };
+		67B934161BEE70E400AD068B /* MessageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MessageInfo.h; path = TwitterTest/Models/MessageInfo.h; sourceTree = SOURCE_ROOT; };
+		67B934171BEE70E400AD068B /* MessageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MessageInfo.m; path = TwitterTest/Models/MessageInfo.m; sourceTree = SOURCE_ROOT; };
+		67B9341A1BEE721A00AD068B /* UserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfo.h; sourceTree = "<group>"; };
+		67B9341B1BEE721A00AD068B /* UserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfo.m; sourceTree = "<group>"; };
+		67B9341F1BEEB58600AD068B /* UserTimelineImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTimelineImageCell.h; sourceTree = "<group>"; };
+		67B934201BEEB58600AD068B /* UserTimelineImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTimelineImageCell.m; sourceTree = "<group>"; };
+		67B934221BEEBDB700AD068B /* ImagesContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesContainer.h; sourceTree = "<group>"; };
+		67B934231BEEBDB700AD068B /* ImagesContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesContainer.m; sourceTree = "<group>"; };
 		67EDE97E1BED002600C1AF25 /* TwitterTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67EDE9821BED002600C1AF25 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		67EDE9841BED002600C1AF25 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		67EDE9851BED002600C1AF25 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		67EDE9871BED002600C1AF25 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		67EDE9881BED002600C1AF25 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		67EDE9871BED002600C1AF25 /* UserTimelineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserTimelineViewController.h; path = ../../UserTimelineViewController.h; sourceTree = "<group>"; };
+		67EDE9881BED002600C1AF25 /* UserTimelineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserTimelineViewController.m; path = ../../UserTimelineViewController.m; sourceTree = "<group>"; };
 		67EDE98B1BED002600C1AF25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		67EDE98D1BED002600C1AF25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		67EDE9901BED002600C1AF25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -58,6 +77,8 @@
 		67EDE9C81BED6DA800C1AF25 /* TwitterToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterToken.m; sourceTree = "<group>"; };
 		67EDE9CB1BED9F0800C1AF25 /* UserTimeLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTimeLineModel.h; sourceTree = "<group>"; };
 		67EDE9CC1BED9F0800C1AF25 /* UserTimeLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTimeLineModel.m; sourceTree = "<group>"; };
+		67EDE9CF1BEDABA000C1AF25 /* UserTimelineParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTimelineParser.h; sourceTree = "<group>"; };
+		67EDE9D01BEDABA000C1AF25 /* UserTimelineParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTimelineParser.m; sourceTree = "<group>"; };
 		99592B8120A0AFBF3F8390C1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACB730E405BAC2C03BA3E566 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		BDACFA0863886A5239417E7B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -82,6 +103,62 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		67B9340D1BEE534500AD068B /* UserTimeLineViewController */ = {
+			isa = PBXGroup;
+			children = (
+				67B9340F1BEE538600AD068B /* TableViewCells */,
+				67B9340E1BEE536D00AD068B /* ViewControllers */,
+			);
+			path = UserTimeLineViewController;
+			sourceTree = "<group>";
+		};
+		67B9340E1BEE536D00AD068B /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				67EDE9871BED002600C1AF25 /* UserTimelineViewController.h */,
+				67EDE9881BED002600C1AF25 /* UserTimelineViewController.m */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		67B9340F1BEE538600AD068B /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				67B934101BEE53F900AD068B /* UserTimelineCell.h */,
+				67B934111BEE53F900AD068B /* UserTimelineCell.m */,
+				67B9341F1BEEB58600AD068B /* UserTimelineImageCell.h */,
+				67B934201BEEB58600AD068B /* UserTimelineImageCell.m */,
+			);
+			path = TableViewCells;
+			sourceTree = "<group>";
+		};
+		67B934191BEE720B00AD068B /* UserInfo */ = {
+			isa = PBXGroup;
+			children = (
+				67B9341A1BEE721A00AD068B /* UserInfo.h */,
+				67B9341B1BEE721A00AD068B /* UserInfo.m */,
+			);
+			path = UserInfo;
+			sourceTree = "<group>";
+		};
+		67B9341D1BEEA04C00AD068B /* MediaInfo */ = {
+			isa = PBXGroup;
+			children = (
+				67B934131BEE6E8600AD068B /* MediaInfo.h */,
+				67B934141BEE6E8600AD068B /* MediaInfo.m */,
+			);
+			path = MediaInfo;
+			sourceTree = "<group>";
+		};
+		67B9341E1BEEA06700AD068B /* MessageInfo */ = {
+			isa = PBXGroup;
+			children = (
+				67B934161BEE70E400AD068B /* MessageInfo.h */,
+				67B934171BEE70E400AD068B /* MessageInfo.m */,
+			);
+			path = MessageInfo;
+			sourceTree = "<group>";
+		};
 		67EDE9751BED002600C1AF25 = {
 			isa = PBXGroup;
 			children = (
@@ -105,14 +182,14 @@
 		67EDE9801BED002600C1AF25 /* TwitterTest */ = {
 			isa = PBXGroup;
 			children = (
+				67EDE9CE1BEDAB7400C1AF25 /* Parser */,
 				67EDE9CA1BED9EC200C1AF25 /* Models */,
 				67EDE9C61BED6AD700C1AF25 /* Protocols */,
 				67EDE9BD1BED59E000C1AF25 /* Constants */,
 				67EDE9B91BED572E00C1AF25 /* ServiceManager */,
+				67B9340D1BEE534500AD068B /* UserTimeLineViewController */,
 				67EDE9841BED002600C1AF25 /* AppDelegate.h */,
 				67EDE9851BED002600C1AF25 /* AppDelegate.m */,
-				67EDE9871BED002600C1AF25 /* ViewController.h */,
-				67EDE9881BED002600C1AF25 /* ViewController.m */,
 				67EDE98A1BED002600C1AF25 /* Main.storyboard */,
 				67EDE98D1BED002600C1AF25 /* Assets.xcassets */,
 				67EDE98F1BED002600C1AF25 /* LaunchScreen.storyboard */,
@@ -172,10 +249,24 @@
 		67EDE9CA1BED9EC200C1AF25 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				67B934191BEE720B00AD068B /* UserInfo */,
+				67B9341E1BEEA06700AD068B /* MessageInfo */,
+				67B9341D1BEEA04C00AD068B /* MediaInfo */,
 				67EDE9CB1BED9F0800C1AF25 /* UserTimeLineModel.h */,
 				67EDE9CC1BED9F0800C1AF25 /* UserTimeLineModel.m */,
+				67B934221BEEBDB700AD068B /* ImagesContainer.h */,
+				67B934231BEEBDB700AD068B /* ImagesContainer.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		67EDE9CE1BEDAB7400C1AF25 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				67EDE9CF1BEDABA000C1AF25 /* UserTimelineParser.h */,
+				67EDE9D01BEDABA000C1AF25 /* UserTimelineParser.m */,
+			);
+			path = Parser;
 			sourceTree = "<group>";
 		};
 		C21EC7BCC58AA9F9025855F8 /* Pods */ = {
@@ -347,14 +438,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67B9341C1BEE721A00AD068B /* UserInfo.m in Sources */,
 				67EDE9C91BED6DA800C1AF25 /* TwitterToken.m in Sources */,
 				67EDE9C31BED5D5000C1AF25 /* URLConfiguration.m in Sources */,
-				67EDE9891BED002600C1AF25 /* ViewController.m in Sources */,
+				67EDE9891BED002600C1AF25 /* UserTimelineViewController.m in Sources */,
 				67EDE9861BED002600C1AF25 /* AppDelegate.m in Sources */,
+				67B934211BEEB58600AD068B /* UserTimelineImageCell.m in Sources */,
 				67EDE9831BED002600C1AF25 /* main.m in Sources */,
+				67EDE9D11BEDABA000C1AF25 /* UserTimelineParser.m in Sources */,
 				67EDE9CD1BED9F0800C1AF25 /* UserTimeLineModel.m in Sources */,
+				67B934241BEEBDB700AD068B /* ImagesContainer.m in Sources */,
 				67EDE9BC1BED574600C1AF25 /* ServiceManager.m in Sources */,
+				67B934151BEE6E8600AD068B /* MediaInfo.m in Sources */,
+				67B934181BEE70E400AD068B /* MessageInfo.m in Sources */,
 				67EDE9C01BED59F800C1AF25 /* SystemLevelConstants.m in Sources */,
+				67B934121BEE53F900AD068B /* UserTimelineCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

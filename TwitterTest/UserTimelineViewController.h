@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TwitterToken.h"
 
-@interface ViewController : UIViewController<TwitterTokenProtocol>
+@interface UserTimelineViewController : UIViewController<TwitterTokenProtocol>
 
 
 @end

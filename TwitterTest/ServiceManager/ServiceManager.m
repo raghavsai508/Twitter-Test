@@ -9,6 +9,7 @@
 #import "ServiceManager.h"
 #import "URLConfiguration.h"
 #import "SystemLevelConstants.h"
+#import "UserTimelineParser.h"
 #import "AFNetworking.h"
 
 
@@ -73,8 +74,11 @@ NSString * const kGrantTypeValue            = @"client_credentials";
 - (void)getRequestCallWithURL:(NSString *)URL withDataBlock:(dataBlock)dataBlockValues
 {
     [self.manager GET:URL parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSDictionary *reponseDictionary = (NSDictionary *)responseObject;
-        dataBlockValues(reponseDictionary,nil);
+        NSArray *reponseArray = (NSArray *)responseObject;
+        UserTimelineParser *userParser = [[UserTimelineParser alloc] init];
+        NSArray *parsedArray = [userParser parseUserTimelineData:reponseArray];
+        NSDictionary *parsedDict = [[NSDictionary alloc] initWithObjectsAndKeys:parsedArray,@"user_timeline", nil];
+        dataBlockValues(parsedDict,nil);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         dataBlockValues(operation.responseObject,error);
     }];

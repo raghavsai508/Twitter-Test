@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UserInfo.h"
+#import "MediaInfo.h"
+#import "MessageInfo.h"
 
 @interface UserTimeLineModel : NSObject
+
+@property (nonatomic, strong) UserInfo      *userInfo;
+@property (nonatomic, strong) MessageInfo   *messageInfo;
+@property (nonatomic, strong) MediaInfo     *mediaInfo;
 
 @end
