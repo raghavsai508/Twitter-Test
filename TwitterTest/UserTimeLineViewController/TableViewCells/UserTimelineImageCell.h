@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "UserTimeLineModel.h"
+@class TTTAttributedLabel;
 
 @interface UserTimelineImageCell : UITableViewCell
+
+
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel *lblMessage;
+
 
 - (void)configureCell:(UserTimeLineModel *)userModel atIndexPath:(NSIndexPath *)indexPath;
 

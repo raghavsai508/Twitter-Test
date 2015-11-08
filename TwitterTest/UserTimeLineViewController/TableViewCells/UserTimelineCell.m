@@ -8,6 +8,7 @@
 
 #import "UserTimelineCell.h"
 #import "ImagesContainer.h"
+#import "TTTAttributedLabel.h"
 
 @interface UserTimelineCell ()
 
@@ -15,7 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel            *lblUsername;
 @property (weak, nonatomic) IBOutlet UILabel            *lblHandle;
 @property (weak, nonatomic) IBOutlet UILabel            *lblDatePosted;
-@property (weak, nonatomic) IBOutlet UILabel            *lblMessage;
 
 @end
 
@@ -40,6 +40,7 @@
 
 - (void)setupTweetMessage:(UserTimeLineModel *)userModel
 {
+    self.lblMessage.enabledTextCheckingTypes = NSTextCheckingTypeLink;
     self.lblMessage.text = userModel.messageInfo.message;
     self.lblDatePosted.text = [NSString stringWithFormat:@"%@",userModel.messageInfo.message_time_of_tweet] ;
 }

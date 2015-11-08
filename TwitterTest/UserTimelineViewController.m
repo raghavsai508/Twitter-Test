@@ -7,14 +7,16 @@
 //
 
 #import "UserTimelineViewController.h"
+#import "TwitterDetailViewController.h"
 #import "UserTimeLineModel.h"
+#import "TTTAttributedLabel.h"
 #import "UserTimelineCell.h"
 #import "UserTimelineImageCell.h"
 #import "SystemLevelConstants.h"
 #import "ServiceManager.h"
 #import "AppDelegate.h"
 
-@interface UserTimelineViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface UserTimelineViewController ()<UITableViewDataSource,UITableViewDelegate,TTTAttributedLabelDelegate,UIActionSheetDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView            *tableView;
 @property (nonatomic, strong) ServiceManager                *serviceManager;
@@ -69,6 +71,7 @@
 {
     UserTimelineCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UserTimelineCell class]) forIndexPath:indexPath];
     [cell configureCell:userModel atIndexPath:indexPath];
+    cell.lblMessage.delegate = self;
     return cell;
 }
 
@@ -77,7 +80,16 @@
 {
     UserTimelineImageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UserTimelineImageCell class]) forIndexPath:indexPath];
     [cell configureCell:userModel atIndexPath:indexPath];
+    cell.lblMessage.delegate = self;
     return cell;
+}
+
+#pragma mark - UITableViewDelegate methods
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TwitterDetailViewController *twitterDetailViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([TwitterDetailViewController class])];
+    twitterDetailViewController.userModel = self.timeLineArray[indexPath.row];
+    [self.navigationController pushViewController:twitterDetailViewController animated:YES];
 }
 
 
@@ -105,6 +117,23 @@
 }
 
 
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(__unused TTTAttributedLabel *)label
+   didSelectLinkWithURL:(NSURL *)url
+{
+    NSLog(@"%@",url);
+    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+}
+
+#pragma mark - UIActionSheetDelegate methods
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionSheet.title]];
+}
 
 
 - (void)didReceiveMemoryWarning {
