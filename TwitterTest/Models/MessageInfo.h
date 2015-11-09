@@ -10,9 +10,10 @@
 
 @interface MessageInfo : NSObject
 
-@property (nonatomic, strong) NSString      *message;
-@property (nonatomic, strong) NSString      *message_time_of_tweet;
-@property (nonatomic, assign) NSInteger     message_favorite_count;
-@property (nonatomic, assign) NSInteger     message_retweet_count;
+@property (nonatomic, strong) NSString          *message;
+@property (nonatomic, strong) NSString          *message_time_of_tweet;
+@property (nonatomic, assign) NSInteger         message_favorite_count;
+@property (nonatomic, assign) NSInteger         message_retweet_count;
+@property (nonatomic, strong) NSMutableArray    *message_User_Mentions;
 
 @end

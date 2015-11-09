@@ -12,7 +12,9 @@
 
 @interface TwitterDetailCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIView *userView;
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *lblMessage;
+@property (weak, nonatomic) IBOutlet UIButton                   *btnProfile;
 
 - (void)configureCell:(UserTimeLineModel *)userModel;
 

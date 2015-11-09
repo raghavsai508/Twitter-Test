@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1088F3549771845250D4D082'
-               BlueprintName = 'AFNetworking'
+               BlueprintIdentifier = 'CF39EBB25BC7422234624056'
+               BlueprintName = 'BABFrameObservingInputAccessoryView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libAFNetworking.a'>
+               BuildableName = 'libBABFrameObservingInputAccessoryView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

@@ -9,6 +9,7 @@
 #import "UserTimelineViewController.h"
 #import "TwitterDetailViewController.h"
 #import "UserTimeLineModel.h"
+#import "MBProgressHUD.h"
 #import "TTTAttributedLabel.h"
 #import "UserTimelineCell.h"
 #import "UserTimelineImageCell.h"
@@ -39,12 +40,38 @@
     appDelegate.twitterTokenDelegate = self;
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(self.timeLineArray.count == 0)
+    {
+        NSLog(@"progress hud");
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    [self initialServiceCall];
+}
+
 - (void)setupTableView
 {
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 40.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void)initialServiceCall
+{
+    if(self.screen_name)
+    {
+        self.serviceManager = [ServiceManager defaultServiceManager];
+        [self.serviceManager userTimeLine:self.screen_name withResponseData:^(NSDictionary *dictionary, NSError *error) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                [strongSelf updateTableView:strongSelf withData:dictionary];
+            });
+        }];
+    }
 }
 
 #pragma mark - UITableViewDataSource methods
@@ -56,13 +83,11 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     UserTimeLineModel *userModel = self.timeLineArray[indexPath.row];
     if(userModel.mediaInfo!=nil)
         return [self configureUserTimelineImageCellWith:userModel AtIndexPath:indexPath];
     else
         return [self configureUserTimelineCellWith:userModel AtIndexPath:indexPath];
-    
 }
 
 
@@ -112,6 +137,7 @@
 #pragma mark - Helper methods
 - (void)updateTableView:(UserTimelineViewController *)strongSelf withData:(NSDictionary *)dictionary
 {
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     strongSelf.timeLineArray = [dictionary objectForKey:@"user_timeline"];
     [strongSelf.tableView reloadData];
 }
@@ -122,16 +148,13 @@
 - (void)attributedLabel:(__unused TTTAttributedLabel *)label
    didSelectLinkWithURL:(NSURL *)url
 {
-    NSLog(@"%@",url);
     [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
 }
 
 #pragma mark - UIActionSheetDelegate methods
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
+    if (buttonIndex == actionSheet.cancelButtonIndex)
         return;
-    }
-    
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionSheet.title]];
 }
 

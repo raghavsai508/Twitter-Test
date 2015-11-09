@@ -43,8 +43,9 @@
 {
     self.lblMessage.enabledTextCheckingTypes = NSTextCheckingTypeLink;
     self.lblMessage.text = userModel.messageInfo.message;
+    self.lblMessage.linkAttributes = @{NSForegroundColorAttributeName: [UIColor blueColor],
+                                       NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)};
     self.lblDatePosted.text = [NSString stringWithFormat:@"%@",userModel.messageInfo.message_time_of_tweet] ;
-    
 }
 
 - (void)setupImages:(UserTimeLineModel *)userModel

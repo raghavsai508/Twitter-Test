@@ -56,6 +56,14 @@
     userModel.messageInfo.message_time_of_tweet = [self convertDate:[userDict valueForKey:@"created_at"]];
     userModel.messageInfo.message_favorite_count = [[userDict valueForKey:@"favorite_count"] integerValue];
     userModel.messageInfo.message_retweet_count = [[userDict valueForKey:@"retweet_count"] integerValue];
+    [self setupUserMentions:userModel withData:userDict];
+}
+
+- (void)setupUserMentions:(UserTimeLineModel *)userModel withData:(NSDictionary *)userDict
+{
+    userModel.messageInfo.message_User_Mentions = [[NSMutableArray alloc] init];
+    for(NSDictionary *dictionary in [userDict valueForKeyPath:@"entities.user_mentions"])
+        [userModel.messageInfo.message_User_Mentions addObject:[dictionary valueForKey:@"screen_name"]];
 }
 
 - (void)setupMediaInfo:(UserTimeLineModel *)userModel withData:(NSDictionary *)dictionary

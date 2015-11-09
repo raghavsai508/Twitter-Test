@@ -7,13 +7,19 @@
 //
 
 #import "TwitterDetailViewController.h"
+#import "UserTimelineViewController.h"
+#import "BABFrameObservingInputAccessoryView.h"
+#import "MBProgressHUD.h"
 #import "UserTimeLineModel.h"
 #import "TwitterDetailCell.h"
 #import "TTTAttributedLabel.h"
 
-@interface TwitterDetailViewController ()<UITableViewDataSource,UITableViewDelegate,TTTAttributedLabelDelegate,UIActionSheetDelegate>
+@interface TwitterDetailViewController ()<UITableViewDataSource,UITableViewDelegate,TTTAttributedLabelDelegate,UIActionSheetDelegate,UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView        *tableView;
+@property (weak, nonatomic) IBOutlet UIView             *replyView;
+@property (weak, nonatomic) IBOutlet UITextField        *txtSendField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *toolbarContainerVerticalSpacingConstraint;
 
 @end
 
@@ -21,7 +27,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupTableView];
+    [self initialSetup];
+}
+
+- (void)initialSetup
+{
+    if(self.userModel)
+    {
+        [self setupTableView];
+        [self setupTextField];
+    }
+    else
+        [self showAlertView];
 }
 
 - (void)setupTableView
@@ -30,21 +47,48 @@
     self.tableView.delegate = self;
     self.tableView.estimatedRowHeight = 200.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];;
+}
+
+- (void)setupTextField
+{
+    self.txtSendField.delegate = self;
+    BABFrameObservingInputAccessoryView *inputView = [[BABFrameObservingInputAccessoryView alloc] init];
+    inputView.userInteractionEnabled = NO;
+    self.txtSendField.inputAccessoryView = inputView;
+    __weak typeof(self)weakSelf = self;
+    inputView.keyboardFrameChangedBlock = ^(BOOL keyboardVisible, CGRect keyboardFrame){
+        CGFloat value = CGRectGetMaxY(weakSelf.view.frame) - CGRectGetMinY(keyboardFrame);
+        weakSelf.toolbarContainerVerticalSpacingConstraint.constant = MAX(0, value);
+        [weakSelf.view layoutIfNeeded];
+    };
+}
+
+- (void)showAlertView
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                        message:@"Problem in retreiving Tweet"
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil, nil];
+    [alertView show];
 }
 
 #pragma mark - UITableViewDataSource methods
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    if(self.userModel)
+        return 1;
+    return 0;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TwitterDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([TwitterDetailCell class]) forIndexPath:indexPath];
     [cell configureCell:self.userModel];
     cell.lblMessage.delegate = self;
+    [cell.btnProfile addTarget:self action:@selector(showProfile) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -55,7 +99,10 @@
    didSelectLinkWithURL:(NSURL *)url
 {
     NSLog(@"%@",url);
-    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+    if([self.userModel.messageInfo.message_User_Mentions containsObject:[url absoluteString]])
+        [self handleClicked:[url absoluteString]];
+    else
+        [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
 }
 
 #pragma mark - UIActionSheetDelegate methods
@@ -67,20 +114,61 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionSheet.title]];
 }
 
+#pragma mark - Action methods
+- (void)showProfile
+{
+    [self openProfile:self.userModel.userInfo.user_screen_name];
+}
+
+- (void)handleClicked:(NSString *)screenName
+{
+    [self openProfile:screenName];
+}
+
+- (IBAction)userViewTapped:(id)sender
+{
+    [self showProfile];
+}
+
+- (IBAction)sendAction:(id)sender
+{
+    [self.txtSendField resignFirstResponder];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
+        self.txtSendField.text = @"";
+    });
+}
+
+#pragma mark - UITextFieldDelegate methods
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    textField.text = [NSString stringWithFormat:@"@%@",self.userModel.userInfo.user_screen_name];
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if(range.length + range.location > textField.text.length)
+        return NO;
+    
+    NSUInteger newLength = [textField.text length] + [string length] - range.length;
+    return newLength <= 140;
+}
+
+
+#pragma mark - Helper methods
+- (void)openProfile:(NSString *)screenName
+{
+    UserTimelineViewController *userTimeLineViewController = [self.storyboard instantiateViewControllerWithIdentifier:NSStringFromClass([UserTimelineViewController class])];
+    userTimeLineViewController.screen_name = screenName;
+    [self.navigationController pushViewController:userTimeLineViewController animated:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -11,6 +11,7 @@
 
 @interface UserTimelineViewController : UIViewController<TwitterTokenProtocol>
 
+@property (nonatomic, strong) NSString *screen_name;
 
 @end
 

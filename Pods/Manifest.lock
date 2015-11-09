@@ -20,11 +20,17 @@ PODS:
   - AFNetworking/UIKit (2.6.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - BABFrameObservingInputAccessoryView (0.2.3)
+  - MBProgressHUD (0.9.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - BABFrameObservingInputAccessoryView
+  - MBProgressHUD (~> 0.9.1)
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
+  BABFrameObservingInputAccessoryView: dfc91ba8f2e5e05330ebf5072d2b99e0b475a74e
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
 
 COCOAPODS: 0.39.0
