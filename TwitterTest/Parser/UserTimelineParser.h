@@ -10,6 +10,7 @@
 
 @interface UserTimelineParser : NSObject
 
+/* This method returns array of model parsed data. */
 - (NSMutableArray *)parseUserTimelineData:(NSArray *)dataArray;
 
 @end

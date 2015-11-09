@@ -13,9 +13,10 @@
 
 @interface UserTimelineCell : UITableViewCell
 
+/* This property is responsible for holding the tweeted or re-tweeted message. */
 @property (weak, nonatomic) IBOutlet TTTAttributedLabel *lblMessage;
 
-
-- (void)configureCell:(UserTimeLineModel *)userModel atIndexPath:(NSIndexPath *)indexPath;
+/* This method is responsible for configuring the user model. */
+- (void)configureCell:(UserTimeLineModel *)userModel;
 
 @end

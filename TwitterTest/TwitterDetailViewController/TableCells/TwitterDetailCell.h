@@ -12,10 +12,16 @@
 
 @interface TwitterDetailCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIView *userView;
-@property (weak, nonatomic) IBOutlet TTTAttributedLabel *lblMessage;
+/* This property contains the user name and handle. */
+@property (weak, nonatomic) IBOutlet UIView                     *userView;
+
+/* This property holds the tweet message. */
+@property (weak, nonatomic) IBOutlet TTTAttributedLabel         *lblMessage;
+
+/* This property holds the user profile image. */
 @property (weak, nonatomic) IBOutlet UIButton                   *btnProfile;
 
+/* This method is reponsible for configuring the cell. */
 - (void)configureCell:(UserTimeLineModel *)userModel;
 
 @end

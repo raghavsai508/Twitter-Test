@@ -9,10 +9,6 @@
 #import "UserTimelineParser.h"
 #import "UserTimeLineModel.h"
 
-@interface UserTimelineParser ()
-
-
-@end
 
 @implementation UserTimelineParser
 
@@ -30,6 +26,7 @@
 }
 
 #pragma mark - Helper methods
+/* This method is responsible for parsing user information from the response dictionary. */
 - (void)setupUserInfo:(UserTimeLineModel *)userModel withData:(NSDictionary *)dictionary
 {
     userModel.userInfo = [[UserInfo alloc] init];
@@ -49,6 +46,7 @@
     [self setupUserInfo:userModel withData:userDict];
 }
 
+/* This method is responsible for populating the messages model. */
 - (void)populateMessageInfo:(UserTimeLineModel *)userModel withData:(NSDictionary *)userDict
 {
     userModel.messageInfo = [[MessageInfo alloc] init];
@@ -59,6 +57,7 @@
     [self setupUserMentions:userModel withData:userDict];
 }
 
+/* This method add the user mentions to the UserTimeLineModel object. */
 - (void)setupUserMentions:(UserTimeLineModel *)userModel withData:(NSDictionary *)userDict
 {
     userModel.messageInfo.message_User_Mentions = [[NSMutableArray alloc] init];
@@ -66,6 +65,7 @@
         [userModel.messageInfo.message_User_Mentions addObject:[dictionary valueForKey:@"screen_name"]];
 }
 
+/* This method is responsible for storing media info into UserTimeLineModel object. */
 - (void)setupMediaInfo:(UserTimeLineModel *)userModel withData:(NSDictionary *)dictionary
 {
     NSArray *mediaArray = [dictionary valueForKeyPath:@"entities.media"];

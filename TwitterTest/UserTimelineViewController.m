@@ -57,6 +57,7 @@
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 40.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)initialServiceCall
@@ -95,7 +96,7 @@
 - (UserTimelineCell *)configureUserTimelineCellWith:(UserTimeLineModel *)userModel AtIndexPath:(NSIndexPath *)indexPath
 {
     UserTimelineCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UserTimelineCell class]) forIndexPath:indexPath];
-    [cell configureCell:userModel atIndexPath:indexPath];
+    [cell configureCell:userModel];
     cell.lblMessage.delegate = self;
     return cell;
 }
@@ -104,7 +105,7 @@
 - (UserTimelineImageCell *)configureUserTimelineImageCellWith:(UserTimeLineModel *)userModel AtIndexPath:(NSIndexPath *)indexPath
 {
     UserTimelineImageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UserTimelineImageCell class]) forIndexPath:indexPath];
-    [cell configureCell:userModel atIndexPath:indexPath];
+    [cell configureCell:userModel];
     cell.lblMessage.delegate = self;
     return cell;
 }
@@ -142,22 +143,45 @@
     [strongSelf.tableView reloadData];
 }
 
-
 #pragma mark - TTTAttributedLabelDelegate
-
 - (void)attributedLabel:(__unused TTTAttributedLabel *)label
    didSelectLinkWithURL:(NSURL *)url
 {
-    [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+    [self showAlertController:url forLabelFrame:label];
 }
 
-#pragma mark - UIActionSheetDelegate methods
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex)
-        return;
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionSheet.title]];
+#pragma mark - Utility methods
+- (void)showAlertController:(NSURL *)url forLabelFrame:(TTTAttributedLabel *)label
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[url absoluteString]
+                                                                             message:@"Open link in Safari"
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [[UIApplication sharedApplication] openURL:url];
+                               }];
+    UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+    if (popover)
+    {
+        popover.sourceView = label;
+        popover.sourceRect = label.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
+    }
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

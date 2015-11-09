@@ -10,6 +10,7 @@
 
 @protocol TwitterTokenProtocol <NSObject>
 
+/* This delegate method is fired after the token has bee downloaded. */
 - (void)twitterTokenDownloaded:(NSDictionary *)dataDictionary;
 
 @end

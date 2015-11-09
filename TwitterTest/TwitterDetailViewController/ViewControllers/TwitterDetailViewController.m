@@ -47,7 +47,7 @@
     self.tableView.delegate = self;
     self.tableView.estimatedRowHeight = 200.0f;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];;
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)setupTextField
@@ -59,6 +59,7 @@
     __weak typeof(self)weakSelf = self;
     inputView.keyboardFrameChangedBlock = ^(BOOL keyboardVisible, CGRect keyboardFrame){
         CGFloat value = CGRectGetMaxY(weakSelf.view.frame) - CGRectGetMinY(keyboardFrame);
+        NSLog(@"%f,%f",CGRectGetMaxY(weakSelf.view.frame),CGRectGetMinY(keyboardFrame));
         weakSelf.toolbarContainerVerticalSpacingConstraint.constant = MAX(0, value);
         [weakSelf.view layoutIfNeeded];
     };
@@ -98,21 +99,46 @@
 - (void)attributedLabel:(__unused TTTAttributedLabel *)label
    didSelectLinkWithURL:(NSURL *)url
 {
-    NSLog(@"%@",url);
     if([self.userModel.messageInfo.message_User_Mentions containsObject:[url absoluteString]])
         [self handleClicked:[url absoluteString]];
     else
-        [[[UIActionSheet alloc] initWithTitle:[url absoluteString] delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Open Link in Safari", nil), nil] showInView:self.view];
+        [self showAlertController:url forLabelFrame:label];
 }
 
-#pragma mark - UIActionSheetDelegate methods
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        return;
+
+#pragma mark - Utillity methods
+- (void)showAlertController:(NSURL *)url forLabelFrame:(TTTAttributedLabel *)label
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[url absoluteString]
+                                                                             message:@"Open link in Safari"
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction
+                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
+                                   style:UIAlertActionStyleCancel
+                                   handler:^(UIAlertAction *action)
+                                   {
+                                       NSLog(@"Cancel action");
+                                   }];
+    UIAlertAction *okAction = [UIAlertAction
+                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction *action)
+                               {
+                                   [[UIApplication sharedApplication] openURL:url];
+                               }];
+    UIPopoverPresentationController *popover = alertController.popoverPresentationController;
+    if (popover)
+    {
+        popover.sourceView = label;
+        popover.sourceRect = label.bounds;
+        popover.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
+    [alertController addAction:cancelAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
     
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:actionSheet.title]];
 }
+
 
 #pragma mark - Action methods
 - (void)showProfile
@@ -164,6 +190,9 @@
     userTimeLineViewController.screen_name = screenName;
     [self.navigationController pushViewController:userTimeLineViewController animated:YES];
 }
+
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

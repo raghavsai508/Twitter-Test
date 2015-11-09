@@ -26,19 +26,21 @@
     // Initialization code
 }
 
-- (void)configureCell:(UserTimeLineModel *)userModel atIndexPath:(NSIndexPath *)indexPath
+- (void)configureCell:(UserTimeLineModel *)userModel
 {
     [self setupUserInfo:userModel];
     [self setupTweetMessage:userModel];
     [self setupImages:userModel];
 }
 
+/* This method is responsible for setting the user information. */
 - (void)setupUserInfo:(UserTimeLineModel *)userModel
 {
     self.lblUsername.text = userModel.userInfo.username;
     self.lblHandle.text = [NSString stringWithFormat:@"@%@",userModel.userInfo.user_screen_name];
 }
 
+/* This method is responsible for setting up the tweet message. */
 - (void)setupTweetMessage:(UserTimeLineModel *)userModel
 {
     self.lblMessage.enabledTextCheckingTypes = NSTextCheckingTypeLink;
@@ -68,6 +70,7 @@
     
 }
 
+/* This method sets the tweet image at each cell. */
 - (void)setupTweetImageWithURL:(NSString *)url
 {
     UIImage* image = [[ImagesContainer sharedContainer] getImageForURL:url];
@@ -78,6 +81,8 @@
         [self fetchImageFromURLTweet:url];
 }
 
+/* This method is responsible for fetching tweet image from the server and stores it in
+ an Image Container. */
 - (void)fetchImageFromURLTweet:(NSString *)url
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
@@ -93,6 +98,8 @@
     });
 }
 
+/* This method is responsible for fetching profile image from the server and stores it in
+ an Image Container. */
 - (void)fetchImageFromURL:(NSString *)url
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{

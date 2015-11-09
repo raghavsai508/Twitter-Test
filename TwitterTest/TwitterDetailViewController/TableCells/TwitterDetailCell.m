@@ -13,12 +13,24 @@
 
 @interface TwitterDetailCell ()
 
+/* This property holds the user name. */
 @property (weak, nonatomic) IBOutlet UILabel                    *lblUsername;
+
+/* This property holds the handle or screen name. */
 @property (weak, nonatomic) IBOutlet UILabel                    *lblHandle;
+
+/* This property holds the tweet image */
 @property (weak, nonatomic) IBOutlet UIImageView                *tweetImageView;
+
+/* This property holds the tweet posted date. */
 @property (weak, nonatomic) IBOutlet UILabel                    *lblDatePosted;
+
+/* This property holds the retweet count. */
 @property (weak, nonatomic) IBOutlet UILabel                    *lblRetweetCount;
+
+/* This property holds the likes or favorite count.  */
 @property (weak, nonatomic) IBOutlet UILabel                    *lblFavoriteCount;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint         *widthHeightAspectConstraint;
 
 @end
@@ -37,12 +49,14 @@
     [self setupProfileImage:userModel];
 }
 
-
+/* This method is responsible for setting the user information. */
 - (void)setupUserInfo:(UserTimeLineModel *)userModel
 {
     self.lblUsername.text = userModel.userInfo.username;
-    self.lblHandle.text = userModel.userInfo.user_screen_name;
+    self.lblHandle.text = [NSString stringWithFormat:@"@%@",userModel.userInfo.user_screen_name];
 }
+
+/* This method is responsible for setting up the tweet message. */
 
 - (void)setupMessageInfo:(UserTimeLineModel *)userModel
 {
@@ -54,6 +68,7 @@
     [self setupUserMentions:userModel];
 }
 
+/* This method is responsible for setting up the user mentions in the message. */
 - (void)setupUserMentions:(UserTimeLineModel *)userModel
 {
     self.lblMessage.linkAttributes = @{NSForegroundColorAttributeName: [UIColor blueColor],
@@ -65,6 +80,7 @@
     }
 }
 
+/* This method is responsible for setting up media information. */
 - (void)setupMediaInfo:(UserTimeLineModel *)userModel
 {
     if(userModel.mediaInfo.mediaURL)
@@ -101,6 +117,8 @@
         [self fetchImageFromURL:url];
     
 }
+
+/* This method sets the tweet image at each cell. */
 
 - (void)setupTweetImageWithURL:(NSString *)url
 {

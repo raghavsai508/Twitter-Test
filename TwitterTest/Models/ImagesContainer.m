@@ -28,7 +28,6 @@
     return imageInstance;
 }
 
-
 - (UIImage *)getImageForURL:(NSString *)imageURL
 {
     UIImage *returnImage;
@@ -40,8 +39,6 @@
 {
     if(image)
         [self.imagesCache setObject:image forKey:imageURL];
-//    else
-//        [self.imagesCache setObject:[UIImage imageNamed:@"no_image.jpg"] forKey:imageURL];
 }
 
 
